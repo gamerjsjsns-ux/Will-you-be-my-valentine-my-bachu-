@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dearest Anishka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS STYLES --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fffafb; /* Creamy background */
+            font-family: 'Lato', sans-serif;
+            color: #5d4037;
+            height: 100vh; /* Full screen height */
+            width: 100vw;
+            overflow: hidden; /* STOP SCROLLING */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The Container */
+        .container {
+            width: 90%;
+            max-width: 450px;
+            height: 90vh;
+            position: relative;
+            text-align: center;
+        }
+
+        /* Slides */
+        .slide {
+            display: none; /* Hide everything by default */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex; /* Only show the active one */
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #4a4a4a;
+        }
+
+        .subtitle {
+            color: #ff8fa3;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        .highlight { color: #d63384; }
+
+        /* Images */
+        .photo-frame {
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            margin: 15px 0;
+            width: 80%;
+            height: auto; 
+            display: block; 
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Text Boxes */
+        .text-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #555;
+            max-height: 40vh; 
+            overflow-y: auto; 
+            margin-bottom: 15px;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Letter Style */
+        .paper {
+            background: #fff9c4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            width: 100%;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn:active { transform: scale(0.95); }
+
+        .buttons-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .no-btn {
+            background-color: white;
+            border: 2px solid #d63384;
+            color: #d63384;
+        }
+
+        /* Floating Hearts BG */
+        .bg-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Hidden Response Text */
+        #response-text {
+            display: none;
+            background-color: #ffe6ea;
+            color: #d63384;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .music-control {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #pink;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="music-control" onclick="toggleMusic()">🎵 Play Music</button>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <div class="bg-hearts" id="heartsContainer"></div>
+
+        <div id="slide1" class="slide active">
+            <div style="font-size: 40px;">💕</div>
+            <p class="subtitle">A LOVE STORY</p>
+            <h1 class="main-title">My Dearest<br><span class="highlight">Anishka</span></h1>
+            <p style="color: #888; margin-bottom: 30px;">Tap below to start...</p>
+            <button class="btn" onclick="startJourney()">Start Our Journey ❤️</button>
+        </div>
+
+        <div id="slide2" class="slide">
+            <p class="subtitle">FEBRUARY 15TH</p>
+            <h3>The Day We Met</h3>
+            
+            <div class="photo-frame">
+                <img src="meeting.jpg" alt="Upload meeting.jpg to see image">
+            </div>
+
+            <div class="text-box">
+                <p>On the day we met for the first time, February 15th, we talked about so many random things. The way you popped up in the DMs was actually funny.</p>
+                <p>We talked about so much, you told me about your hostel adventures and I was just like, <i>'Damn, so much is happening here, this girl is cool'</i> and I just loved how enthusiastically you were telling me those things. That was my kind of crazy.</p>
+            </div>
+            
+            <button class="btn" onclick="nextSlide(3)">Next Memory ➡️</button>
+        </div>
+
+        <div id="slide3" class="slide">
+            <p class="subtitle">THE REALIZATION</p>
+            <h3 style="margin-bottom: 20px;">When I Knew</h3>
+            
+            <div class="text-box">
+                <p>I didn't realize it at first but my favorite place to be slowly became wherever you were. Whether we were lost in a game on Roblox or just sitting together in silence, everything felt more complete with you there.</p>
+                <p>It made me realize how much I had fallen for you. I was so nervous to tell you after all this time but finally opening up to you made that the best day I have ever had and that day changed everything for the better.</p>
+            </div>
+            
+            <button class="btn" onclick="nextSlide(4)">Next Memory ➡️</button>
+        </div>
+
+        <div id="slide4" class="slide">
+            <p class="subtitle">EVERY DAY</p>
+            <h3>Little Moments</h3>
+            
+            <div class="photo-frame">
+                <img src="moments.jpg" alt="Upload moments.jpg to see image">
+            </div>
+
+            <div class="text-box">
+                <p>Every laugh, every smile, every time we talked, every time we saw each other. The times I asked you to just keep the camera on because i used to be so happy just by that and I could watch you for days and still never feel tired of it.</p>
+                <p>There was this line I said when you asked me for a pickup line. It was meant for you that day too so I will say it again:</p>
+                <hr style="border: 0; border-top: 1px solid #ffccd5; margin: 10px 0;">
+                <p style="font-style: italic;">
+                    <span style="color: #d63384; font-weight: bold;">If solipsism is true and you are just a creation of my mind, then I must be the luckiest dreamer alive.</span> 
+                    And if it really is that way, I would love to stay in it forever.
+                </p>
+            </div>
+            
+            <button class="btn" onclick="nextSlide(5)">Read Letter 💌</button>
+        </div>
+
+        <div id="slide5" class="slide">
+            <h3>My Anishka,</h3>
+            <div class="paper">
+                <p>Honestly baby, life is just better with you in it. Every day by your side is like a page from a storybook I never want to close, literally the best part of both my reality and my imagination.</p>
+                <p>You make the bad days bearable and the good days incredible. It feels almost impossible to find someone who is both your love and your best friend, but I found that in you. Thanks for being my person. I am so lucky to be yours.</p>
+                <p style="font-weight: bold; margin-top: 15px; color: #d63384;">I LOVE YOU SO MUCH.<br>FOREVER YOURS ❤️</p>
+            </div>
+            <button class="btn" onclick="nextSlide(6)">One Last Thing... 🌹</button>
+        </div>
+
+        <div id="slide6" class="slide">
+            <div style="font-size: 50px; margin-bottom: 20px;">❤️</div>
+            <h2>And so...</h2>
+            <h1 class="main-title">Will you be my<br>Valentine?</h1>
+            
+            <p id="response-text"></p>
+
+            <div class="buttons-row">
+                <button class="btn" id="yesBtn" onclick="celebrate()">Yes! 💘</button>
+                <button class="btn no-btn" id="noBtn" onclick="plead()">No...</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. MUSIC PLAYER
+        const musicBtn = document.querySelector('.music-control');
+        const audio = document.getElementById('bgMusic');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                audio.pause();
+                musicBtn.innerText = "🎵 Play Music";
+            } else {
+                audio.play();
+                musicBtn.innerText = "⏸️ Pause Music";
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // 2. SLIDE NAVIGATION & START JOURNEY
+        function startJourney() {
+            // Try to play music immediately when they click "Start"
+            audio.play().then(() => {
+                isMusicPlaying = true;
+                musicBtn.innerText = "⏸️ Pause Music";
+            }).catch(error => {
+                console.log("Auto-play was prevented by browser");
+            });
+            
+            nextSlide(2);
+        }
+
+        function nextSlide(slideNumber) {
+            // Hide all slides
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => {
+                s.classList.remove('active');
+            });
+
+            // Show the requested slide
+            const activeSlide = document.getElementById('slide' + slideNumber);
+            if(activeSlide) {
+                activeSlide.classList.add('active');
+            }
+        }
+
+        // 3. NO BUTTON LOGIC
+        let noCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const responseText = document.getElementById('response-text');
+
+        function plead() {
+            noCount++;
+            responseText.style.display = "block"; // Show the text box
+
+            // Logic for each click
+            if (noCount === 1) {
+                responseText.innerText = "I know your no means yes 😉";
+                yesBtn.style.transform = "scale(1.2)"; // Make Yes bigger
+            } else if (noCount === 2) {
+                responseText.innerText = "Are you really sure? 🥺";
+                yesBtn.style.transform = "scale(1.3)";
+            } else if (noCount === 3) {
+                responseText.innerText = "Babyyy pleaseeeee 😭";
+                yesBtn.style.transform = "scale(1.4)";
+            } else if (noCount === 4) {
+                responseText.innerText = "If you wanted me to crash the bike into a tree, you could have just said that instead of saying no 😞";
+                yesBtn.style.transform = "scale(1.5)";
+            } else {
+                responseText.innerText = "Okay, I am taking my no button away! 😤";
+                noBtn.style.display = "none"; // Hide No button
+                yesBtn.style.transform = "scale(1.7)";
+            }
+        }
+
+        // 4. CELEBRATION
+        function celebrate() {
+            const slide6 = document.getElementById('slide6');
+            slide6.innerHTML = `
+                <h1 style="font-size: 3rem; color: #ff4d6d;">YAY! 💖</h1>
+                <p style="font-size: 1.5rem;">See you on the 14th! 🌹</p>
+                <p>I love you Anishka!</p>
+                <br>
+                <div style="font-size: 60px;">💑</div>
+            `;
+            startConfetti();
+        }
+
+        // Simple floating hearts animation
+        function startConfetti() {
+            const container = document.getElementById('heartsContainer');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerText = '❤️';
+                heart.style.position = 'absolute';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = '-10px';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.opacity = Math.random();
+                heart.style.transition = 'top 3s ease-in';
+                
+                container.appendChild(heart);
+
+                // Animate falling
+                setTimeout(() => {
+                    heart.style.top = '100vh';
+                }, 10);
+
+                // Remove after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }, 100);
+        }
+    </script>
+</body>
+              </html>
+
